@@ -20,8 +20,8 @@ export enum RecordUpdateOption {
 
 export interface Record {
     aliveElems: HTMLElement[],
-    recordElemAdd: (elem: HTMLElement) => boolean,
-    recordElemRemove: (elem: HTMLElement) => boolean,
+    recordElemAdd: ElemChangeCb,
+    recordElemRemove: ElemChangeCb,
 }
 
 export type UseRecordInit = {
