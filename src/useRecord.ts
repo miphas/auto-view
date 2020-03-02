@@ -1,11 +1,13 @@
-import { UseRecordInit, Record, ElemChangeCb } from './types'
-import { some, find } from './utils'
+import { UseRecordInit, Record, ElemChangeCb, RecordElemChangeCb, RecordUpdateOption } from './types'
+import { some, find, each } from './utils'
 
 export default function useRecord(options: UseRecordInit): Record {
 
     const { ignores } = options
 
     const aliveElems: HTMLElement[] = []
+
+    const listeners: RecordElemChangeCb[] = []
 
     /**
      * 测试待检测元素是否在数组中
@@ -27,6 +29,7 @@ export default function useRecord(options: UseRecordInit): Record {
             return
         }
         aliveElems.push(elem)
+        each(listeners, (listener) => listener(elem, aliveElems.length - 1, RecordUpdateOption.ADD))
     }
 
     /**
@@ -34,15 +37,32 @@ export default function useRecord(options: UseRecordInit): Record {
      * @param elem 删除元素
      */
     const recordElemRemove: ElemChangeCb = (elem: HTMLElement) => {
-        const idx = find(aliveElems, item => item === elem)
+        const idx = find(aliveElems, (item) => item === elem)
         if (idx !== -1) {
+            each(listeners, (listener) => listener(elem, idx, RecordUpdateOption.REMOVE))
             aliveElems.splice(idx, 1)
+        }
+    }
+
+    /**
+     * 修改监听方法
+     * @param onAliveElemChange 监听方法
+     * @param option 增加/删除
+     */
+    const updateElemListener = (onAliveElemChange: RecordElemChangeCb, option: RecordUpdateOption) => {
+        const listenerIdx = find(listeners, (item) => item === onAliveElemChange);
+        if (option === RecordUpdateOption.ADD && listenerIdx === -1) {
+            listeners.push(onAliveElemChange)
+        }
+        if (option === RecordUpdateOption.REMOVE && listenerIdx !== -1) {
+            listeners.splice(listenerIdx, 1)
         }
     }
 
     return {
         aliveElems,
         recordElemAdd,
-        recordElemRemove
+        recordElemRemove,
+        updateElemListener
     }
 }

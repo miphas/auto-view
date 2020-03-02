@@ -1,7 +1,8 @@
 
-import { UseObserveInit } from './types'
+import { UseObserveInit, RecordUpdateOption } from './types'
 import useObserve from './useObserve'
 import useRecord from './useRecord'
+import useReport from './useReport'
 
 function init(options: UseObserveInit) {
     const record = useRecord({
@@ -12,6 +13,11 @@ function init(options: UseObserveInit) {
         onElemAdd: record.recordElemAdd, // elem => console.log('ADD', elem),
         onElemRemove: record.recordElemRemove // elem => console.log('RMM', elem)
     })
+    const reportListener = useReport({
+        onElemView: (vid: string, vdata: any) => console.log('View', vid, vdata),
+        onElemClick: (vid: string, vdata: any) => console.log('click', vid, vdata)
+    })
+    record.updateElemListener(reportListener, RecordUpdateOption.ADD)
 
     ;(window as any).record = record
 }
