@@ -9,6 +9,10 @@ export type MutationObserveCb = (records: MutationRecord[]) => void
 
 export type RecordElemChangeCb = (elem: HTMLElement, idx: number, option: RecordUpdateOption) => any
 
+export type ElemReportFun = (vid: string, vdata: any) => any
+
+export type ModTriggerFun = (elem: HTMLElement, reportState: ReportState) => void
+
 export type UseObserveInit = {
     observeElem: HTMLElement,
     onElemAdd?: ElemChangeCb,
@@ -32,13 +36,30 @@ export type UseRecordInit = {
 }
 
 export type ReportInit = {
-    onElemView: (vid: string, vdata: any) => any,
-    onElemClick: (vid: string, vdata: any) => any
+    observeElems: HTMLElement[],
+    onElemView: ElemReportFun,
+    onElemClick: ElemReportFun
 }
 
 export type ReportState = {
     vid: string,
     vdata: any,
     hasView: boolean,
-    bindClick?: (this: HTMLElement, ev: MouseEvent) => any
+    bindView?: IntersectionObserver | null,
+    bindClick?: (this: HTMLElement, ev: MouseEvent) => any | null
+}
+
+export type ViewTriggerInit = {
+    observeElems: HTMLElement[],
+    onElemView: ElemReportFun
+}
+
+export type ClickTriggerInit = {
+    observeElems: HTMLElement[],
+    onElemClick: ElemReportFun
+}
+
+export interface Trigger {
+    addTrigger: ModTriggerFun,
+    removeTrigger: ModTriggerFun
 }

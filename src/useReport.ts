@@ -1,10 +1,15 @@
 import { ReportInit, ReportState, RecordElemChangeCb, RecordUpdateOption } from './types'
+import getViewTrigger from './getViewTrigger'
+import getClickTrigger from './getClickTrigger'
 
 export default function useReport(reportInit: ReportInit) {
 
-    const { onElemView, onElemClick } = reportInit
+    const { observeElems, onElemView, onElemClick } = reportInit
 
     const reportStates: ReportState[] = []
+
+    const viewTrigger = getViewTrigger()
+    const clickTrigger = getClickTrigger({ observeElems, onElemClick })
 
     /**
      * 获取初始化状态
@@ -19,18 +24,15 @@ export default function useReport(reportInit: ReportInit) {
     }
 
     /**
-     * 监控元素曝光
+     * 增加监控元素曝光
      * @param elem 变动元素
      * @param reportState 上报状态
      */
-    const viewMonitor = (elem: HTMLElement, reportState: ReportState) => {
-        // TODO mod view monitor
-        const { hasView, vid, vdata } = reportState
-        if (hasView) {
+    const addViewMonitor = (elem: HTMLElement, reportState: ReportState) => {
+        if (reportState.bindView || reportState.hasView) {
             return
         }
-        reportState.hasView = true
-        onElemView(vid, vdata)
+        viewTrigger.addTrigger(elem, reportState, onElemView)
     }
 
     /**
@@ -39,23 +41,22 @@ export default function useReport(reportInit: ReportInit) {
      * @param reportState 上报状态
      */
     const removeViewMonitor = (elem: HTMLElement, reportState: ReportState) => {
+        if (!reportState.bindView) {
+            return
+        }
+        viewTrigger.removeTrigger(elem, reportState)
     }
 
     /**
-     * 监控元素点击
+     * 增加监控元素点击
      * @param elem 变动元素
      * @param reportState 上报状态
      */
-    const clickMonitor = (elem: HTMLElement, reportState: ReportState) => {
-        const { bindClick, vid, vdata } = reportState
-        if (bindClick) {
+    const addClickMonitor = (elem: HTMLElement, reportState: ReportState) => {
+        if (reportState.bindClick) {
             return
         }
-        reportState.bindClick = function (this, ev) { 
-            // * 会触发父级元素的click 同样也会上报
-            return onElemClick(vid, vdata) 
-        }
-        elem.addEventListener('click', reportState.bindClick)
+        clickTrigger.addTrigger(elem, reportState)
     }
 
     /**
@@ -64,10 +65,10 @@ export default function useReport(reportInit: ReportInit) {
      * @param reportState 上报状态
      */
     const removeClickMonitor = (elem: HTMLElement, reportState: ReportState) => {
-        const { bindClick } = reportState
-        if (bindClick) {
-            elem.removeEventListener('click', bindClick)
+        if (!reportState.bindClick) {
+            return
         }
+        clickTrigger.removeTrigger(elem, reportState)
     }
     /**
      * 记录变化
@@ -79,8 +80,8 @@ export default function useReport(reportInit: ReportInit) {
         if (option === RecordUpdateOption.ADD) {
             let state = getInitState(elem)
             reportStates.push(state)
-            viewMonitor(elem, state)
-            clickMonitor(elem, state)
+            addViewMonitor(elem, state)
+            addClickMonitor(elem, state)
         } else {
             let state = reportStates[idx]
             removeViewMonitor(elem, state)
