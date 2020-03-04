@@ -12,7 +12,6 @@
     "url": "git+https://github.com/find-qin/auto-view.git"
   },
   "files": [
-    "src/",
     "dist/"
   ],
   "author": "find-qin",
