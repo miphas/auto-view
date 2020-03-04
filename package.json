@@ -1,6 +1,6 @@
 {
   "name": "@findqin/auto-view",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -12,8 +12,8 @@
     "url": "git+https://github.com/find-qin/auto-view.git"
   },
   "files": [
-    "./src/**/*",
-    "./dist/**/*"
+    "src/",
+    "dist/"
   ],
   "author": "find-qin",
   "license": "ISC",
