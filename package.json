@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "release": "npm config set registry https://registry.npmjs.org/ && npm publish --access=public && npm config set registry http://registry.npm.taobao.org/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
