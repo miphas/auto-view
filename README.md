@@ -52,12 +52,12 @@ PS. 在不支持 IntersectionObserver 的机器上直接打文档上现有元素
 
 
 ## 目录结构
-|
-|- index.ts 项目初始化根文件
-|- type.ts  项目类型定义
-|- utils.ts 项目常用工具方法
-|- useObserve.ts  MutationObserver 观察节点变动
-|- useRecord.ts   记录vid标记的节点
-|- useReport.ts   设置上报打点的触发
-|- getViewTrigger.ts  曝光上报触发器
-|- getClickTrigger.ts 点击上报触发器
+src  
+|- index.ts 项目初始化根文件  
+|- type.ts  项目类型定义  
+|- utils.ts 项目常用工具方法  
+|- useObserve.ts  MutationObserver 观察节点变动  
+|- useRecord.ts   记录vid标记的节点  
+|- useReport.ts   设置上报打点的触发  
+|- getViewTrigger.ts  曝光上报触发器  
+|- getClickTrigger.ts 点击上报触发器  
