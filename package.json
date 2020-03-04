@@ -9,19 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/findQin/auto-view.git"
+    "url": "git+https://github.com/find-qin/auto-view.git"
   },
   "files": [
     "./src/**/*",
     "./dist/**/*"
   ],
-  "author": "findQin",
+  "author": "find-qin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/findQin/auto-view/issues"
+    "url": "https://github.com/find-qin/auto-view/issues"
   },
-  "homepage": "https://github.com/findQin/auto-view#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  }
+  "homepage": "https://github.com/find-qin/auto-view#readme"
 }
