@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/findQin/auto-view/issues"
   },
-  "homepage": "https://github.com/findQin/auto-view#readme"
+  "homepage": "https://github.com/findQin/auto-view#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
