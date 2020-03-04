@@ -1,29 +1,33 @@
 
-import { ReportState, ElemReportFun, ViewTriggerInit, ClickTriggerInit } from './types'
+import { ReportState, ElemReportFun, ViewTriggerInit } from './types'
+import { find, filter, each } from './utils'
 
-export default function getViewTrigger() {
+export default function getViewTrigger(viewTriggerInit: ViewTriggerInit) {
+
+    const { observeElems, reportStates, onElemView } = viewTriggerInit
 
     const supportObserve = (typeof IntersectionObserver !== 'undefined')
+
+    let documentObserve: IntersectionObserver
+
     /**
-     * 
+     * 观测节点回调
      * @param reportState 上报状态
      * @param onElemView 上报view方法
      */
-    const getOberveCb = (elem: HTMLElement, reportState: ReportState, onElemView: ElemReportFun) => {
-        const { vid, vdata } = reportState
-        return (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-            if (!entries[0].isIntersecting) {
+    const observeCb: IntersectionObserverCallback = (entries, observer) => {
+        const interEntries = filter(entries, item => item.isIntersecting)
+        each(interEntries, entry => {
+            const elemIdx = find(observeElems, entry.target)
+            if (elemIdx === -1) {
                 return
             }
-            if (reportState.hasView) {
-                return
-            }
-            // debugger;
+            const reportState = reportStates[elemIdx]
+            onElemView(reportState.vid, reportState.vdata)
             reportState.hasView = true
-            onElemView(vid, vdata)
-            observer.unobserve(elem)
+            documentObserve.unobserve(entry.target)
             reportState.bindView = null
-        }
+        })
     }
 
     /**
@@ -32,13 +36,13 @@ export default function getViewTrigger() {
      * @param reportState 上报状态
      * @param onElemView 上报view方法
      */
-    const addTrigger = (elem: HTMLElement, reportState: ReportState, onElemView: ElemReportFun) => {
+    const addTrigger = (elem: HTMLElement, reportState: ReportState) => {
         if (supportObserve) {
-            let observer = new IntersectionObserver(
-                getOberveCb(elem, reportState, onElemView)
+            documentObserve = documentObserve || new IntersectionObserver(
+                observeCb
             )
-            observer.observe(elem)
-            reportState.bindView = observer
+            documentObserve.observe(elem)
+            reportState.bindView = documentObserve
         } else {
             reportState.hasView = true
             onElemView(reportState.vid, reportState.vdata)

@@ -37,7 +37,7 @@ export default function useRecord(options: UseRecordInit): Record {
      * @param elem 删除元素
      */
     const recordElemRemove: ElemChangeCb = (elem: HTMLElement) => {
-        const idx = find(aliveElems, (item) => item === elem)
+        const idx = find(aliveElems, elem)
         if (idx !== -1) {
             each(listeners, (listener) => listener(elem, idx, RecordUpdateOption.REMOVE))
             aliveElems.splice(idx, 1)
@@ -50,7 +50,7 @@ export default function useRecord(options: UseRecordInit): Record {
      * @param option 增加/删除
      */
     const updateElemListener = (onAliveElemChange: RecordElemChangeCb, option: RecordUpdateOption) => {
-        const listenerIdx = find(listeners, (item) => item === onAliveElemChange);
+        const listenerIdx = find(listeners, onAliveElemChange);
         if (option === RecordUpdateOption.ADD && listenerIdx === -1) {
             listeners.push(onAliveElemChange)
         }

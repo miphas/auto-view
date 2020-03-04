@@ -13,6 +13,8 @@ export type ElemReportFun = (vid: string, vdata: any) => any
 
 export type ModTriggerFun = (elem: HTMLElement, reportState: ReportState) => void
 
+export type IgnoreRuleFun = (elem: HTMLElement) => boolean
+
 export type UseObserveInit = {
     observeElem: HTMLElement,
     onElemAdd?: ElemChangeCb,
@@ -32,7 +34,7 @@ export interface Record {
 }
 
 export type UseRecordInit = {
-    ignores: (elem: HTMLElement) => boolean,
+    ignores: IgnoreRuleFun,
 }
 
 export type ReportInit = {
@@ -51,15 +53,24 @@ export type ReportState = {
 
 export type ViewTriggerInit = {
     observeElems: HTMLElement[],
+    reportStates: ReportState[],
     onElemView: ElemReportFun
 }
 
 export type ClickTriggerInit = {
     observeElems: HTMLElement[],
+    reportStates: ReportState[],
     onElemClick: ElemReportFun
 }
 
 export interface Trigger {
     addTrigger: ModTriggerFun,
     removeTrigger: ModTriggerFun
+}
+
+export type AutoViewInit = {
+    onElemView: ElemReportFun,
+    onElemClick: ElemReportFun,
+    ignores?: IgnoreRuleFun,
+    rootElement?: HTMLElement,
 }

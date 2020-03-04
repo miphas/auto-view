@@ -8,17 +8,26 @@ export default function useReport(reportInit: ReportInit) {
 
     const reportStates: ReportState[] = []
 
-    const viewTrigger = getViewTrigger()
-    const clickTrigger = getClickTrigger({ observeElems, onElemClick })
+    const viewTrigger = getViewTrigger({ observeElems, reportStates, onElemView })
+    const clickTrigger = getClickTrigger({ observeElems, reportStates, onElemClick })
 
     /**
      * 获取初始化状态
      * @param elem 元素对象
      */
     const getInitState = (elem: HTMLElement) => {
+        let vid: string = elem.dataset.vid || 'unknow-vid'
+        let vdata: any = elem.dataset.vdata || undefined
+        if (vdata && vdata.indexOf('{') !== -1) {
+            try {
+                vdata && (vdata = JSON.parse(vdata))
+            } catch (e) {
+                // console.log(e)
+            }
+        }
         return {
-            vid: elem.dataset.vid || 'unknow-vid',
-            vdata: elem.dataset.vdata || undefined,
+            vid,
+            vdata,
             hasView: false,
         }
     }
@@ -32,7 +41,7 @@ export default function useReport(reportInit: ReportInit) {
         if (reportState.bindView || reportState.hasView) {
             return
         }
-        viewTrigger.addTrigger(elem, reportState, onElemView)
+        viewTrigger.addTrigger(elem, reportState)
     }
 
     /**

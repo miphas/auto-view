@@ -33,8 +33,8 @@ export function some<T>(array: ArrayLike<T> | HTMLCollection, testFun: TestFun<T
  * @param array 待查找数组
  * @param testFun 判断方法
  */
-export function find<T>(array: ArrayLike<T> | HTMLCollection, testFun: TestFun<T>): number {
-    return Array.prototype.indexOf.call(array, testFun)
+export function find<T>(array: ArrayLike<T> | HTMLCollection, target: T): number {
+    return Array.prototype.indexOf.call(array, target)
 }
 
 /**

@@ -1,8 +1,8 @@
 {
   "name": "@findqin/auto-view",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/findQin/auto-view.git"
   },
-  "author": "",
+  "author": "findQin",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/findQin/auto-view/issues"
