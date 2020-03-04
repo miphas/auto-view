@@ -42,7 +42,7 @@ PS. 在不支持 IntersectionObserver 的机器上直接打文档上现有元素
 
 ## 整体结构
 
-![整体结构](./docs/pics/Structure.jpeg)
+![整体结构](https://github.com/findQin/auto-view/blob/master/docs/pics/Structure.jpeg)
 
 - MutationObserver 监控了页面节点的增删情况，并通知Record
 - Record 根据节点信息进行筛选，记录下需要监控的节点
