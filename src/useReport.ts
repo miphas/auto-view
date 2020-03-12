@@ -2,7 +2,7 @@ import { ReportInit, ReportState, RecordElemChangeCb, RecordUpdateOption } from 
 import getViewTrigger from './getViewTrigger'
 import getClickTrigger from './getClickTrigger'
 
-export default function useReport(reportInit: ReportInit) {
+export default function useReport(reportInit: ReportInit): { reportListener: RecordElemChangeCb } {
 
     const { observeElems, onElemView, onElemClick } = reportInit
 
@@ -85,7 +85,7 @@ export default function useReport(reportInit: ReportInit) {
      * @param idx 变动序号
      * @param option 增加/删除
      */
-    const onRecordChange: RecordElemChangeCb = (elem, idx, option) => {
+    const reportListener: RecordElemChangeCb = (elem, idx, option) => {
         if (option === RecordUpdateOption.ADD) {
             let state = getInitState(elem)
             reportStates.push(state)
@@ -99,5 +99,5 @@ export default function useReport(reportInit: ReportInit) {
         }
     }
 
-    return onRecordChange
+    return { reportListener }
 }
