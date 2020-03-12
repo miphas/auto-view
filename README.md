@@ -1,6 +1,5 @@
-# auto-view
-
-> auto-view是一款自动上报埋点的工具
+# auto-view  
+auto-view是一款自动上报埋点的工具
 
 ## 用法
 

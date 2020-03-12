@@ -68,7 +68,7 @@ export interface Trigger {
     removeTrigger: ModTriggerFun
 }
 
-export interface Plugin {
+export interface ViewPlugin {
     create: (options: AutoViewInit) => void,
     update: RecordElemChangeCb
 }
@@ -78,6 +78,6 @@ export type AutoViewInit = {
     onElemClick: ElemReportFun,
     ignores?: IgnoreRuleFun,
     rootElement?: HTMLElement,
-    plugins?: Plugin[],
+    plugins?: ViewPlugin[],
     devMode?: boolean,
 }
