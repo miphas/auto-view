@@ -23,7 +23,7 @@ export default function getViewTrigger(viewTriggerInit: ViewTriggerInit) {
                 return
             }
             const reportState = reportStates[elemIdx]
-            onElemView(reportState.vid, reportState.vdata)
+            onElemView(reportState.vid, reportState.vdata, entry.target as HTMLElement)
             reportState.hasView = true
             documentObserve.unobserve(entry.target)
             reportState.bindView = null
@@ -45,7 +45,7 @@ export default function getViewTrigger(viewTriggerInit: ViewTriggerInit) {
             reportState.bindView = documentObserve
         } else {
             reportState.hasView = true
-            onElemView(reportState.vid, reportState.vdata)
+            onElemView(reportState.vid, reportState.vdata, elem)
         }
     }
 

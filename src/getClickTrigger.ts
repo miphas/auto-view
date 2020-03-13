@@ -14,7 +14,7 @@ export default function getClickTrigger(clickTriggerInit: ClickTriggerInit): Tri
         const { vid, vdata } = reportState
         reportState.bindClick = function (this, ev) { 
             // * 会触发父级元素的click 同样也会上报
-            return onElemClick(vid, vdata) 
+            return onElemClick(vid, vdata, elem) 
         }
         elem.addEventListener('click', reportState.bindClick)
     }

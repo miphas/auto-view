@@ -9,7 +9,7 @@ export type MutationObserveCb = (records: MutationRecord[]) => void
 
 export type RecordElemChangeCb = (elem: HTMLElement, idx: number, option: RecordUpdateOption) => any
 
-export type ElemReportFun = (vid: string, vdata: any) => any
+export type ElemReportFun = (vid: string, vdata: any, elem?: HTMLElement) => any
 
 export type ModTriggerFun = (elem: HTMLElement, reportState: ReportState) => void
 
