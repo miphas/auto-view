@@ -1,23 +1,24 @@
 {
-  "name": "@findqin/auto-view",
+  "name": "@miphas/auto-view",
   "version": "0.1.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "release": "npm config set registry https://registry.npmjs.org/ && npm publish --access=public && npm config set registry http://registry.npm.taobao.org/",
+    "build": "rm -rf ./dist && tsc",
+    "release": "npm run build && npm publish --access=public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/find-qin/auto-view.git"
+    "url": "git+https://github.com/miphas/auto-view.git"
   },
   "files": [
     "dist/"
   ],
-  "author": "find-qin",
+  "author": "miphas",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/find-qin/auto-view/issues"
+    "url": "https://github.com/miphas/auto-view/issues"
   },
-  "homepage": "https://github.com/find-qin/auto-view#readme"
+  "homepage": "https://github.com/miphas/auto-view#readme"
 }
