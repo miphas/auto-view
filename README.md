@@ -3,13 +3,13 @@ auto-view是一款自动上报埋点的工具
 
 ## 用法
 
-### 1. npm i @findqin/auto-view --save
+### 1. npm i @miphas/auto-view --save
 
 ### 2. insert js code
 
 ``` javascript
 // 渲染真实节点前插入（before render）
-import autoView from '@findqin/auto-view'
+import autoView from '@miphas/auto-view'
 
 autoView({
     onElemView: (vid, vdata) => {
@@ -41,7 +41,7 @@ PS. 在不支持 IntersectionObserver 的机器上直接打文档上现有元素
 
 ## 整体结构
 
-<img src="https://github.com/findQin/auto-view/blob/master/docs/pics/Structure.jpeg" width="80%">
+<img src="https://github.com/miphas/auto-view/blob/master/docs/pics/Structure.jpeg" width="80%">
 
 
 - MutationObserver 监控了页面节点的增删情况，并通知Record
